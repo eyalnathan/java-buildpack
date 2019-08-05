@@ -14,7 +14,7 @@ else
   JRE_PATH=$HOME/.java/jre
 fi
 
-for SERVICE in postgresql mongodb; do
+for SERVICE in postgresql mongodb rabbitmq redis; do
   LEN="$(echo "${VCAP_SERVICES}" | jq --raw-output ".${SERVICE} | length")"
   for (( i=0; i<${LEN}; i++ )); do
     CA_BASE64="$(echo "${VCAP_SERVICES}" | jq --raw-output ".${SERVICE}[${i}].credentials.ca_base64")"
