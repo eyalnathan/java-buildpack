@@ -21,7 +21,7 @@ for SERVICE in postgresql mongodb rabbitmq redis; do
     if [[ "${CA_BASE64}" != "null" ]]; then
       echoerr "Importing CA certificate for ${SERVICE}[${i}]..."
       echo ${CA_BASE64} | base64 -d > $HOME/tmp/ssl/${SERVICE}${i}.crt
-      ${JRE_PATH}/bin/keytool -keystore ${JRE_PATH}/lib/security/cacerts -storepass changeit -importcert -noprompt -alias mongodb${i} -file $HOME/tmp/ssl/${SERVICE}${i}.crt
+      ${JRE_PATH}/bin/keytool -keystore ${JRE_PATH}/lib/security/cacerts -storepass changeit -importcert -noprompt -alias ${SERVICE}${i} -file $HOME/tmp/ssl/${SERVICE}${i}.crt
       echoerr "Import finished successfully"
     fi
   done
