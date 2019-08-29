@@ -15,9 +15,9 @@ else
 fi
 
 for SERVICE in postgresql mongodb rabbitmq redis "user-provided"; do
-  LEN="$(echo "${VCAP_SERVICES}" | jq --raw-output ".${SERVICE} | length")"
+  LEN="$(echo "${VCAP_SERVICES}" | jq --raw-output ."\"${SERVICE}\" | length")"
   for (( i=0; i<${LEN}; i++ )); do
-    CA_BASE64="$(echo "${VCAP_SERVICES}" | jq --raw-output ".${SERVICE}[${i}].credentials.ca_base64")"
+    CA_BASE64="$(echo "${VCAP_SERVICES}" | jq --raw-output ".\"${SERVICE}\"[${i}].credentials.ca_base64")"
     if [[ "${CA_BASE64}" != "null" ]]; then
       echoerr "Importing CA certificate for ${SERVICE}[${i}]..."
       echo ${CA_BASE64} | base64 -d > $HOME/tmp/ssl/${SERVICE}${i}.crt
